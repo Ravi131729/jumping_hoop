@@ -1,0 +1,93 @@
+<mujoco>
+  <option gravity="0 0 -9.810" timestep="0.0001"/>
+  <visual>
+    <global offheight="2160" offwidth="3840"/>
+    <quality offsamples="8"/>
+  </visual>
+
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" rgb1=".1 .2 .3"
+             rgb2=".2 .3 .4" width="30" height="30" mark="none"/>
+    <material name="grid" texture="grid" texrepeat="6 6"
+              texuniform="true" reflectance=".2"/>
+    <material name="wall" rgba='.8 .5 .5 1'/>
+    <mesh name="hoop_vis_mesh" file="hoop.stl" scale="0.001 0.001 0.001"/>
+  </asset>
+
+
+
+<worldbody>
+  <light name="light" pos="-.2 0 10" diffuse="1 1 1" specular="0 1 1" ambient="0.2 0.2 0.2"/>
+
+  <geom name="ground" type="plane" size="100 5 0.1" material="grid"
+        zaxis="0 0 1" friction=".5 0 0"
+        solimp="0.9 0.95 0.001 0.5 2" solref="0.02 0.1"
+        contype="1" conaffinity="1"/>
+
+  <camera name="y" pos="0 0 0.1" euler="90 0 0"/>
+
+  <body name="hoop" pos="0 0 0.103">
+    <joint name="hoop_joint" type="free" />
+    <inertial mass="0.2" pos="0 0 0" fullinertia="0.0016 0.0011 0.0011 0 0 0"/>
+
+    <!-- Collision proxy (invisible): cylinder; axis along +x via euler="90 0 0" -->
+    <!-- <geom name="hoop_geom_col" type="cylinder" size="0.10 0.01" euler="90 0 0"
+          rgba="0 0 0 0"
+          solimp="0.9 0.95 0.001 0.5 2" solref="0.02 0.1"
+          contype="1" conaffinity="1"/> -->
+    <geom name="hoop_geom_col" type="mesh" mesh="hoop_vis_mesh"
+      euler="0 0 0"
+      rgba="0.8 0.8 0.8 1"
+      contype="1" conaffinity="1"
+      solimp="0.9 0.95 0.001 0.5 2" solref="0.02 0.1"/>
+    <!-- Visual mesh (no collision): STL -->
+    <!-- If your STL’s axis is different, adjust euler/scale. Many rings modeled with axis along +z,
+         so rotate to match the collision cylinder (axis +x) using euler="0 90 0" OR keep 90 0 0 if already aligned. -->
+    <!-- <geom name="hoop_geom_vis" type="mesh" mesh="hoop_vis_mesh"
+          euler="0 0 0"
+          rgba="0.8 0.8 0.8 1"
+          contype="0" conaffinity="0"/> -->
+
+    <body name="pend_body" pos="0 0.01 0">
+      <joint name="pend" type="hinge" pos="0 0 0" axis="0 -1 0"/>
+      <inertial mass="0.22" pos="0 0 -0.03" fullinertia="0.00066 0.00066 0.00063 0 0 0"/>
+
+      <!-- Pendulum: no collisions -->
+      <geom name="pendulum" type="cylinder" pos="0 0 -0.03" size="0.01 0.03"
+            rgba="1 0 0 1" euler="0 0 0"
+            contype="2" conaffinity="0"/>
+
+      <site name="IMU" pos="0 0 0"/>
+
+      <body name="rotor_body" pos="0 0 -0.070">
+        <joint name="rotor" type="hinge" pos="0 0 0" axis="0 0 1"/>
+        <inertial mass="0.03" pos="0 0 -0.07" fullinertia="0.000013 0.000013 0.000026 0 0 0"/>
+
+        <!-- Rotor: thin disc; no collisions -->
+        <geom name="rotor_mesh" type="cylinder" pos="0 0 0" size="0.03 0.001"
+              rgba="1 0 1 1" euler="0 0 0"
+              contype="2" conaffinity="0"/>
+      </body>
+    </body>
+  </body>
+</worldbody>
+
+
+  <sensor>
+    <jointpos name="pend_jointpos" joint="pend" />
+    <accelerometer name="accelerometer" site="IMU"/>
+    <gyro name="gyroscope" site="IMU"/>
+  </sensor>
+  <actuator>
+    <motor name="my_motor" joint="pend"/>
+    <motor name="twist_rotor" joint="rotor" />
+  </actuator>
+  <keyframe>
+    <!-- qpos layout: [x y z qw qx qy qz | pend | rotor]; qvel: [vx vy vz wx wy wz | pend | rotor] -->
+    <key name="k_at_13_822"
+
+         qpos="3.54872 0.623403 0.0564989 0.705534 0.705525 -0.0471854 -0.0472258 48.7514 2221.72"
+         qvel="0 0 0 0 0 0 0 0"
+         ctrl="0 0"/>
+  </keyframe>
+</mujoco>
