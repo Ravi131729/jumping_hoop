@@ -20,8 +20,8 @@
   <light name="light" pos="-.2 0 10" diffuse="1 1 1" specular="0 1 1" ambient="0.2 0.2 0.2"/>
 
   <geom name="ground" type="plane" size="100 5 0.1" material="grid"
-        zaxis="0 0 1" friction=".5 0 0"
-        solimp="0.9 0.95 0.001 0.5 2" solref="0.02 0.1"
+        zaxis="0 0 1"       friction=".8 0.01 0.001"
+        solimp="0.9 0.95 0.001 0.5 2" solref="0.02 0.2"
         contype="1" conaffinity="1"/>
 
   <camera name="y" pos="0 0 0.1" euler="90 0 0"/>
@@ -39,7 +39,7 @@
       euler="0 0 0"
       rgba="0.8 0.8 0.8 1"
       contype="1" conaffinity="1"
-      solimp="0.9 0.95 0.001 0.5 2" solref="0.02 0.1"/>
+      solimp="0.9 0.95 0.001 0.5 2" solref="0.02 0.5"/>
     <!-- Visual mesh (no collision): STL -->
     <!-- If your STL’s axis is different, adjust euler/scale. Many rings modeled with axis along +z,
          so rotate to match the collision cylinder (axis +x) using euler="0 90 0" OR keep 90 0 0 if already aligned. -->
@@ -49,7 +49,7 @@
           contype="0" conaffinity="0"/> -->
 
     <body name="pend_body" pos="0 0.01 0">
-      <joint name="pend" type="hinge" pos="0 0 0" axis="0 -1 0"/>
+      <joint name="pend" type="hinge" pos="0 0 0"  axis="0 -1 0"/>
       <inertial mass="0.22" pos="0 0 -0.03" fullinertia="0.00066 0.00066 0.00063 0 0 0"/>
 
       <!-- Pendulum: no collisions -->

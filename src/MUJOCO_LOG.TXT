@@ -1,0 +1,21 @@
+Fri Aug 15 00:03:01 2025
+WARNING: File size over 2GB is not supported. File: '/root/ros1_ws/src/jumping_hoop/src/'
+
+Fri Aug 15 00:34:33 2025
+WARNING: Nan, Inf or huge value in QACC at DOF 3. The simulation is unstable. Time = 6.8788.
+
+Fri Aug 15 00:36:16 2025
+WARNING: Nan, Inf or huge value in QACC at DOF 3. The simulation is unstable. Time = 7.0748.
+
+Fri Aug 15 01:07:08 2025
+WARNING: Nan, Inf or huge value in QACC at DOF 5. The simulation is unstable. Time = 6.5624.
+
+Fri Aug 15 01:08:05 2025
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 8.5510.
+
+Fri Aug 15 01:08:33 2025
+WARNING: Nan, Inf or huge value in QACC at DOF 7. The simulation is unstable. Time = 6.2370.
+
+Fri Aug 15 01:12:13 2025
+WARNING: Nan, Inf or huge value in QACC at DOF 1. The simulation is unstable. Time = 8.1214.
+
